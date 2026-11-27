@@ -1,9 +1,12 @@
 name: Scarica immagini intro Wellness
 
-# Avvio manuale: scarica le immagini elencate in ios/wellness/intro/sources.txt,
+# Parte quando cambia l'elenco delle immagini (o a mano): scarica le immagini elencate in ios/wellness/intro/sources.txt,
 # le ridimensiona e le salva nel branch da cui è stato avviato. Così la pagina le serve
 # da sé, senza richieste a server esterni da parte dei visitatori.
 on:
+  push:
+    branches-ignore: [ main ]
+    paths: [ 'ios/wellness/intro/sources.txt', '.github/workflows/fetch-media.yml' ]
   workflow_dispatch:
 
 permissions:
