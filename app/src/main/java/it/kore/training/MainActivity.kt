@@ -46,6 +46,7 @@ import it.kore.training.ui.screens.ExerciseDetailScreen
 import it.kore.training.ui.screens.GuideScreen
 import it.kore.training.ui.screens.HomeScreen
 import it.kore.training.ui.screens.LibraryScreen
+import it.kore.training.ui.screens.MembershipScreen
 import it.kore.training.ui.screens.NutritionScreen
 import it.kore.training.ui.screens.OneRmScreen
 import it.kore.training.ui.screens.OnboardingScreen
@@ -136,6 +137,7 @@ fun KoreApp(vm: AppViewModel = viewModel()) {
                 composable("onerm") { OneRmScreen(vm, nav) }
                 composable("plates") { PlatesScreen(vm, nav) }
                 composable("rir") { RirScreen(nav) }
+                composable("membership") { MembershipScreen(nav) }
             }
         }
     }

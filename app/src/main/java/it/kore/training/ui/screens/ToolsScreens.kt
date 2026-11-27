@@ -33,6 +33,7 @@ fun ToolsScreen(nav: NavHostController) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp)) {
         Text("Strumenti", style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(8.dp))
+        ToolRow(Icons.Filled.WorkspacePremium, "Membership", "Private, Signature e Concierge: privacy assoluta") { nav.navigate("membership") }
         ToolRow(Icons.Filled.Calculate, "Calcolatore massimale", "Stima l'1RM da qualsiasi serie e tabella dei carichi") { nav.navigate("onerm") }
         ToolRow(Icons.Filled.Speed, "Tabella RIR / RPE", "Che carico usare per ripetizioni e buffer desiderati") { nav.navigate("rir") }
         ToolRow(Icons.Filled.FitnessCenter, "Calcolatore dischi", "Quali dischi caricare sul bilanciere") { nav.navigate("plates") }

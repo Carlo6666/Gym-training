@@ -1,5 +1,6 @@
 package it.kore.training.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,11 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import it.kore.training.AppViewModel
+import it.kore.training.R
 import it.kore.training.data.*
 import it.kore.training.ui.*
 import java.time.LocalDate
@@ -48,6 +51,8 @@ fun HomeScreen(vm: AppViewModel, nav: NavHostController) {
         Box(Modifier.fillMaxWidth().background(K.heroGradient).padding(20.dp)) {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(painterResource(R.drawable.brand_symbol), null, Modifier.size(30.dp))
+                    Spacer(Modifier.width(8.dp))
                     Text("KORE", fontWeight = FontWeight.Black, fontSize = 22.sp, color = K.Accent, letterSpacing = 4.sp)
                     Spacer(Modifier.weight(1f))
                     Pill("${phase.short} · SETT. ${st.week}/${Program.WEEKS_PER_MESO}")
@@ -195,6 +200,8 @@ fun OnboardingScreen(vm: AppViewModel, onDone: () -> Unit) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         Box(Modifier.fillMaxWidth().background(K.heroGradient).padding(24.dp)) {
             Column {
+                Image(painterResource(R.drawable.brand_logo), "Secret Luxury Wellness", Modifier.width(150.dp))
+                Spacer(Modifier.height(12.dp))
                 Text("KORE", fontWeight = FontWeight.Black, fontSize = 40.sp, color = K.Accent, letterSpacing = 8.sp)
                 Text("Allenati con metodo. Misura. Progredisci.", color = K.Muted)
                 Spacer(Modifier.height(14.dp))
