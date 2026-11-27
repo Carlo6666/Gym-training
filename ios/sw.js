@@ -1,7 +1,8 @@
 // KORE Training · service worker: l'app funziona offline dopo la prima apertura.
 const VERSION = 'kore-v1';
 const SHELL = ['./', 'index.html', 'style.css', 'data.js', 'logic.js', 'app.js', 'manifest.webmanifest',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
+  'brand/logo1.png', 'brand/symbol1.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

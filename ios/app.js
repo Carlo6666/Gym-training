@@ -231,7 +231,7 @@ VIEWS.home = () => {
   const last = [...data.history].sort((a, b) => b.startedAt - a.startedAt)[0];
   const standalone = window.navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
 
-  let h = `<div class="hero"><div class="row"><span class="logo">KORE</span><span class="grow"></span>${pill(`${phase.short} · SETT. ${st.week}/${Program.WEEKS_PER_MESO}`)}</div>
+  let h = `<div class="hero"><div class="row"><img class="sym-sm" src="brand/symbol1.png" alt=""><span class="logo">KORE</span><span class="grow"></span>${pill(`${phase.short} · SETT. ${st.week}/${Program.WEEKS_PER_MESO}`)}</div>
     <p class="muted mt18">${data.profile.name.trim() ? `Ciao ${esc(data.profile.name.trim())},` : 'Pronto ad allenarti?'}</p>
     <h2 class="headline">${plan.deload ? 'Settimana di scarico' : esc(phase.name)}</h2>
     <p class="muted small mt6">Mesociclo ${st.meso + 1}/${Program.MESO_PER_PHASE} · Microciclo ${abs} di ${Program.totalWeeks}</p>
@@ -317,7 +317,7 @@ function readForm() {
   };
 }
 
-VIEWS.onboarding = () => `<div class="hero big-hero"><span class="logo xl">KORE</span><p class="muted">Allenati con metodo. Misura. Progredisci.</p>
+VIEWS.onboarding = () => `<div class="hero big-hero"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><span class="logo xl">KORE</span><p class="muted">Allenati con metodo. Misura. Progredisci.</p>
   <p class="mt14">Un programma annuale in 3 fasi che adatta carichi, serie e recuperi al tuo livello e ai tuoi massimali.</p>
   <button class="out-btn mt14" data-a="importBackup">Hai un backup dell'app Android? Importalo</button></div>` + profileForm('Crea il mio programma');
 
@@ -753,15 +753,21 @@ const TIERS = [
   { name: 'KORE Signature', price: '190', per: '€ / mese', tag: 'Il programma costruito su di te', featured: true, items: ['Tutto di KORE Private', 'Programma personalizzato sui tuoi obiettivi', 'Check mensile riservato con il coach', 'Revisione dei carichi e dei progressi'] },
   { name: 'KORE Concierge', price: 'da 690', per: '€ / mese', tag: 'Il coach al tuo fianco, ovunque', items: ['Tutto di KORE Signature', 'Coaching settimanale, anche in presenza', 'Sessioni in hotel, in viaggio o a domicilio', 'Linea diretta e riservata con il coach'] }
 ];
+const EMAIL = 'secretluxurymail@gmail.com', PHONE = '+393522054063';
+const mailTo = tier => `mailto:${EMAIL}?subject=${encodeURIComponent('Richiesta Secret Luxury Wellbeing' + (tier ? ' - ' + tier : ''))}`;
 VIEWS.membership = () => topBar('Membership') + `<div class="pad">
-  <div class="manifesto"><span class="accent">${icon('lock')}</span><h2 class="headline">Il tuo allenamento resta tuo.</h2>
+  <div class="manifesto"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><h2 class="headline">Il tuo allenamento resta tuo.</h2>
   <p class="soft mt8">Nessun profilo, nessun tracciamento, nessuno sponsor. I tuoi dati non lasciano mai il telefono: non li raccogliamo, non li conserviamo, non li vendiamo. Paghi l'app, non con la tua privacy.</p>
-  <small class="sl-tag mt14">SECRET LUXURY · WELL-BEING</small></div>
+  <small class="sl-tag mt14">SECRET LUXURY WELLNESS</small></div>
   ${TIERS.map(t => `<div class="tier${t.featured ? ' featured' : ''}">${t.featured ? '<span class="tier-badge">LA SCELTA PIÙ RICHIESTA</span>' : ''}
     <h3 class="tier-name">${esc(t.name)}</h3><p class="muted t13">${esc(t.tag)}</p>
     <div class="tier-price"><b>${esc(t.price)}</b><span>${esc(t.per)}</span></div>
     ${t.items.map(bullet).join('')}
-    <button class="${t.featured ? 'grad-btn' : 'out-btn tier-btn'} mt14" data-a="tierInfo">Richiedi l'accesso</button></div>`).join('')}
+    <a class="${t.featured ? 'grad-btn' : 'out-btn tier-btn'} mt14" href="${mailTo(t.name)}">Richiedi l'accesso</a></div>`).join('')}
+  <div class="contact mt16"><p class="tier-name">Secret Luxury Wellbeing</p><p class="muted t13 mt6">Scrivici o chiamaci: rispondiamo personalmente, nella massima riservatezza.</p>
+    <a class="grad-btn mt14" href="${mailTo()}">Secret Luxury Wellbeing</a>
+    <div class="grid2 mt10"><a class="out-btn" href="tel:${PHONE}">Chiama</a><a class="out-btn" href="https://wa.me/${PHONE.slice(1)}" target="_blank" rel="noopener">WhatsApp</a></div>
+    <p class="muted t12 mt10">secretluxurymail@gmail.com · +39 352 205 4063</p></div>
   <p class="muted t12 mt16">Prezzi indicativi IVA inclusa. Ogni membership è riservata e su richiesta.</p><div class="sp32"></div></div>`;
 
 // =============================================================================== MODALS
@@ -955,7 +961,6 @@ const actions = {
   },
   delBw: el => { const day = +el.dataset.v; update(d => { d.bodyWeight = d.bodyWeight.filter(e => e.epochDay !== day); }); render(); },
   libMuscle: el => { ui.libMuscle = el.dataset.v || null; render(); },
-  tierInfo: () => toast('Le richieste di accesso apriranno a breve'),
   guide: el => { const i = +el.dataset.v; ui.guideOpen = ui.guideOpen === i ? -1 : i; render(); }
 };
 

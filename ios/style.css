@@ -285,7 +285,7 @@ html, body { overflow-x: hidden; }
 .section { color: var(--accent); opacity: .85; letter-spacing: 2.4px; }
 .card { border-color: #262217; }
 .grad-btn { letter-spacing: 2.5px; font-weight: 800; }
-.big-hero::after { content: "SECRET LUXURY · WELL-BEING"; display: block; margin-top: 16px; font-size: 10px; letter-spacing: 3px; color: var(--accent2); }
+.big-hero::after { content: "SECRET LUXURY WELLNESS"; display: block; margin-top: 16px; font-size: 10px; letter-spacing: 3px; color: var(--accent2); }
 
 /* membership */
 .manifesto { margin-top: 8px; padding: 22px 18px; border-radius: 22px; border: 1px solid rgba(212, 175, 99, .35); background: radial-gradient(120% 90% at 0% 0%, #1F190D, var(--surface)); }
@@ -300,3 +300,13 @@ html, body { overflow-x: hidden; }
 .tier-price b { font-family: var(--serif); font-size: 36px; }
 .tier-price span { color: var(--muted); font-size: 13px; }
 .tier-btn { width: 100%; color: var(--accent); border-color: rgba(212, 175, 99, .5); }
+
+/* logo Secret Luxury Wellness */
+.brand-logo { display: block; width: 168px; height: auto; margin: 4px auto 18px; }
+.big-hero .brand-logo { margin: 0 0 16px; width: 150px; }
+.sym-sm { width: 34px; height: 34px; margin-right: 10px; object-fit: contain; }
+.manifesto { text-align: center; }
+
+a.grad-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; }
+a.tier-btn, .contact .out-btn { width: 100%; text-decoration: none; }
+.contact { text-align: center; padding: 18px; border: 1px solid rgba(212,175,99,.35); border-radius: 18px; }
