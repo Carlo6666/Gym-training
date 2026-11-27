@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import it.kore.training.R
 import it.kore.training.ui.*
 
-const val SL_EMAIL = "secretluxurymail@gmail.com"
+const val SL_EMAIL = "info@secretluxuryconcierge.com"
 const val SL_PHONE = "+393522054063"
 
 private data class Tier(val name: String, val price: String, val tag: String, val items: List<String>, val featured: Boolean = false)
