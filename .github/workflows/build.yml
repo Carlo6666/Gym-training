@@ -36,6 +36,7 @@ jobs:
           path: KORE-Training.apk
 
       - name: Publish to the "latest" release
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest

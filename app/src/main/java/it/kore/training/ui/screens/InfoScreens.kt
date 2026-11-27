@@ -149,6 +149,18 @@ fun ProfileScreen(vm: AppViewModel, nav: NavHostController) {
             }
         }
         Column(Modifier.padding(horizontal = 16.dp)) {
+            SectionTitle("Membership")
+            KCard(onClick = { nav.navigate("membership") }) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.WorkspacePremium, null, tint = K.Accent)
+                    Spacer(Modifier.width(14.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text("KORE Private · Signature · Concierge", fontWeight = FontWeight.Bold)
+                        Text("Scopri i livelli e la nostra promessa sulla privacy", color = K.Muted, fontSize = 12.sp)
+                    }
+                    Icon(Icons.Filled.ChevronRight, null, tint = K.Muted)
+                }
+            }
             SectionTitle("Backup dei dati")
             KCard {
                 Text("Tutti i dati restano sul telefono. Esporta un backup per non perderli cambiando dispositivo.", color = K.Muted, fontSize = 13.sp)

@@ -36,7 +36,7 @@ L'APK è in `app/build/outputs/apk/debug/app-debug.apk`.
 ## Versione iPhone (web app)
 La cartella `ios/` contiene la stessa app come web app installabile (PWA), senza bisogno di Mac
 né di App Store. Ogni modifica su `main` viene pubblicata su GitHub Pages da
-`.github/workflows/pages.yml`: https://carlo6666.github.io/gym-training/
+`.github/workflows/pages.yml`: https://carlo6666.github.io/Gym-training/
 
 Su iPhone apri il link con **Safari**, tocca **Condividi → Aggiungi alla schermata Home** e
 usala dall'icona KORE: funziona offline e i dati restano sul telefono. Il backup JSON è
