@@ -1,0 +1,33 @@
+name: Scarica immagini intro Wellness
+
+# Avvio manuale: scarica le immagini elencate in ios/wellness/intro/sources.txt,
+# le ridimensiona e le salva nel branch da cui è stato avviato. Così la pagina le serve
+# da sé, senza richieste a server esterni da parte dei visitatori.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica e ridimensiona
+        run: |
+          cd ios/wellness/intro
+          grep -v '^#' sources.txt | while IFS='|' read -r file url page author; do
+            [ -z "$file" ] && continue
+            curl -fsSL "${url}?w=900&h=900&fit=crop&q=85&fm=jpg" -o "tmp-$file"
+            convert "tmp-$file" -resize 720x720^ -gravity center -extent 720x720 -strip -quality 80 -interlace Plane "$file"
+            rm "tmp-$file"
+            ls -la "$file"
+          done
+      - name: Salva nel branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ios/wellness/intro/*.jpg
+          git diff --cached --quiet || git commit -m "Intro Wellness: immagini da Unsplash"
+          git push

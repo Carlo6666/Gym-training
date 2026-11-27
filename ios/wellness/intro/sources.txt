@@ -1,0 +1,8 @@
+# Immagini dell'intro Wellness · Unsplash License (uso gratuito, anche commerciale)
+# file|url immagine|pagina Unsplash|autore
+1-palestra.jpg|https://images.unsplash.com/photo-1778828494354-9b717d36dc99|https://unsplash.com/photos/dark-gym-interior-with-exercise-equipment-and-weight-machines-iW79tgCbiMs|Ambitious Studio* - Rick Barrett
+2-corsa.jpg|https://images.unsplash.com/photo-1594882645126-14020914d58d|https://unsplash.com/photos/woman-running-on-rocky-trail-I1EWTM5mFEM|Venti Views
+3-cibo.jpg|https://images.unsplash.com/photo-1540189549336-e6e99c3679fe|https://unsplash.com/photos/salad-with-walnuts-and-cheese-ZuIDLSz3XLg|Eiliv Aceron
+4-amici.jpg|https://images.unsplash.com/photo-1582298538104-fe2e74c27f59|https://unsplash.com/photos/four-friends-laughing-and-high-fiving-over-coffee-l_ExpFwwOEg|Toa Heftiba
+5-mare.jpg|https://images.unsplash.com/photo-1777312406578-0c08985a6b16|https://unsplash.com/photos/golden-sunset-over-the-calm-ocean-waves-tLIm3Lb1Ulc|Meizon Sanchez Herrera
+6-quiete.jpg|https://images.unsplash.com/photo-1559595500-e15296bdbb48|https://unsplash.com/photos/person-meditating-at-grand-canyon-VD-Vjc8VmRA|Matteo Di Iorio
