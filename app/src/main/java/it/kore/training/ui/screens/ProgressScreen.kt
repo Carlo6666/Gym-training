@@ -136,6 +136,13 @@ fun ExerciseCharts(data: AppData, exerciseId: String) {
                 StatTile("${Calc.fmt(Calc.round(e1.maxOf { it.value }, 0.5))}", "Migliore")
                 StatTile((if (diff >= 0) "+" else "") + Calc.fmt(Calc.round(diff, 0.5)), "Dall'inizio")
             }
+            val trend = Progression.improvement(data.history, exerciseId, null, Long.MAX_VALUE)
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                StatTile(Progression.pct(if (first > 0) diff / first * 100 else null), "Totale %")
+                StatTile(Progression.pct(trend.expectedPct), "Atteso a seduta", accent = true)
+                StatTile(trend.expectedE1rm?.let { Calc.fmt(Calc.round(it, 0.5)) } ?: "—", "Prossimo 1RM")
+            }
         }
     }
     SectionTitle("Volume per seduta (kg × rip)")
@@ -195,7 +202,10 @@ fun SessionDetailScreen(vm: AppViewModel, nav: NavHostController, id: Long) {
                     }
                     if (e.sets.none { it.done }) Text("Nessuna serie completata", color = K.Muted)
                     val best = Stats.bestE1rm(e)
-                    if (best > 0) Text("1RM stimato: ${Calc.fmt(Calc.round(best, 0.5))} kg", color = K.Accent, fontSize = 12.sp, modifier = Modifier.padding(top = 6.dp))
+                    if (best > 0) {
+                        Text("1RM stimato: ${Calc.fmt(Calc.round(best, 0.5))} kg", color = K.Accent, fontSize = 12.sp, modifier = Modifier.padding(top = 6.dp))
+                        ImprovementBox(Progression.improvement(data.history, e.exerciseId, e, s.startedAt))
+                    }
                 }
             }
             Spacer(Modifier.height(24.dp))

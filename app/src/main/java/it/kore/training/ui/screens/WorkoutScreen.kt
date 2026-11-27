@@ -77,7 +77,7 @@ fun WorkoutScreen(vm: AppViewModel, nav: NavHostController) {
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             itemsIndexed(session.exercises, key = { i, e -> "$i-${e.exerciseId}" }) { ei, e ->
-                ExerciseCard(vm, nav, data, ei, e, onSwap = { swapFor = ei })
+                ExerciseCard(vm, nav, data, ei, e, session.startedAt, onSwap = { swapFor = ei })
             }
             item {
                 Spacer(Modifier.height(4.dp))
@@ -202,7 +202,7 @@ private fun RestBar(t: it.kore.training.RestTimer, now: Long, vm: AppViewModel) 
 }
 
 @Composable
-private fun ExerciseCard(vm: AppViewModel, nav: NavHostController, data: AppData, ei: Int, e: SessionExercise, onSwap: () -> Unit) {
+private fun ExerciseCard(vm: AppViewModel, nav: NavHostController, data: AppData, ei: Int, e: SessionExercise, startedAt: Long, onSwap: () -> Unit) {
     val ex = Exercises.get(e.exerciseId)
     val slotCat = Program.templates(data.profile.split).flatMap { it.slots }.firstOrNull { it.key == e.slotKey }?.category ?: ex.category
     val last = remember(data.history, e.exerciseId) { lastPerformance(data.history, e.exerciseId) }
@@ -259,6 +259,70 @@ private fun ExerciseCard(vm: AppViewModel, nav: NavHostController, data: AppData
         TextButton(onClick = { vm.addSet(ei) }) {
             Icon(Icons.Filled.Add, null, tint = K.Accent); Spacer(Modifier.width(4.dp)); Text("Aggiungi serie", color = K.Accent)
         }
+        val imp = remember(data.history, e, startedAt) { Progression.improvement(data.history, e.exerciseId, e, startedAt) }
+        ImprovementBox(imp)
+    }
+}
+
+/** Two boxes: improvement vs the previous session and the expected per-session improvement from the history. */
+@Composable
+fun ImprovementBox(imp: Improvement) {
+    Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        // ---- immediate improvement
+        Column(
+            Modifier.weight(1f).clip(RoundedCornerShape(14.dp)).background(K.Surface2).padding(10.dp)
+        ) {
+            Text("MIGLIORAMENTO", style = MaterialTheme.typography.labelSmall, color = K.Muted, fontSize = 9.sp)
+            val c = when {
+                imp.e1rmPct == null -> K.Muted
+                imp.e1rmPct >= 0 -> K.Good
+                else -> K.Bad
+            }
+            Text(
+                if (imp.prevE1rm == null) "Prima volta" else if (imp.curE1rm <= 0) "—" else Progression.pct(imp.e1rmPct),
+                color = c, fontWeight = FontWeight.Black, fontSize = if (imp.prevE1rm == null) 16.sp else 22.sp
+            )
+            Text("1RM stimato vs ultima seduta", color = K.Muted, fontSize = 10.sp)
+            if (imp.curE1rm > 0) {
+                Text(
+                    "${Calc.fmt(Calc.round(imp.curE1rm, 0.5))} kg" + (imp.prevE1rm?.let { " (prima ${Calc.fmt(Calc.round(it, 0.5))})" } ?: ""),
+                    fontSize = 11.sp, color = K.Text
+                )
+            }
+            imp.volumePct?.let {
+                Text("Volume ${Progression.pct(it)}", fontSize = 11.sp, color = if (it >= 0) K.Good else K.Bad, fontWeight = FontWeight.SemiBold)
+            }
+        }
+        // ---- expected improvement
+        Column(
+            Modifier.weight(1f).clip(RoundedCornerShape(14.dp)).background(K.Accent.copy(alpha = 0.10f)).padding(10.dp)
+        ) {
+            Text("ATTESO A SEDUTA", style = MaterialTheme.typography.labelSmall, color = K.Muted, fontSize = 9.sp)
+            Text(
+                if (imp.expectedPct == null) "—" else Progression.pct(imp.expectedPct),
+                color = K.Accent, fontWeight = FontWeight.Black, fontSize = 22.sp
+            )
+            Text(
+                when {
+                    imp.samples == 0 -> "Servono dati delle sedute precedenti"
+                    imp.samples == 1 -> "Stima base (1 seduta nello storico)"
+                    else -> "Tendenza delle ultime ${imp.samples} sedute"
+                },
+                color = K.Muted, fontSize = 10.sp
+            )
+            imp.expectedE1rm?.let { Text("Obiettivo 1RM ~${Calc.fmt(Calc.round(it, 0.5))} kg", fontSize = 11.sp) }
+            if (imp.expectedPct != null && imp.e1rmPct != null && imp.curE1rm > 0) {
+                val ok = imp.e1rmPct >= imp.expectedPct
+                Text(if (ok) "Sopra le attese ✓" else "Sotto le attese", fontSize = 11.sp,
+                    color = if (ok) K.Good else K.Warn, fontWeight = FontWeight.SemiBold)
+            }
+        }
+    }
+    imp.repsToBeat?.let { (w, r) ->
+        Text(
+            "Per superare l'ultima seduta: ${Calc.fmt(w)} kg × $r ripetizioni",
+            color = K.Accent2, fontSize = 11.sp, modifier = Modifier.padding(top = 6.dp)
+        )
     }
 }
 

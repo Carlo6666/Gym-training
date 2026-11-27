@@ -105,3 +105,78 @@ object Stats {
         }
     }
 }
+
+/** Session-to-session improvement of one exercise, based on the history. */
+data class Improvement(
+    val curE1rm: Double,
+    val prevE1rm: Double?,
+    val e1rmPct: Double?,
+    val curVolume: Double,
+    val prevVolume: Double?,
+    val volumePct: Double?,
+    /** expected % gain per session from the trend of previous sessions. */
+    val expectedPct: Double?,
+    /** expected 1RM for the session being evaluated (trend projection). */
+    val expectedE1rm: Double?,
+    val samples: Int,
+    /** reps needed at the current top weight to beat the previous best estimate. */
+    val repsToBeat: Pair<Double, Int>?
+)
+
+object Progression {
+
+    /**
+     * @param before only sessions started before this instant are "previous".
+     * @param current the performance being evaluated (live session or a saved one).
+     */
+    fun improvement(history: List<Session>, exerciseId: String, current: SessionExercise?, before: Long): Improvement {
+        val prevSessions = history.filter { it.startedAt < before }.sortedBy { it.startedAt }
+        val series = prevSessions.mapNotNull { s ->
+            val ex = s.exercises.filter { it.exerciseId == exerciseId }
+            val e1 = ex.maxOfOrNull { Stats.bestE1rm(it) } ?: 0.0
+            val vol = ex.sumOf { e -> Stats.workSets(e).sumOf { it.weight * it.reps } }
+            if (e1 > 0) e1 to vol else null
+        }.takeLast(8)
+
+        val curSets = current?.let { Stats.workSets(it) } ?: emptyList()
+        val curE1 = curSets.maxOfOrNull { Calc.e1rm(it.weight, it.reps, it.rir) } ?: 0.0
+        val curVol = curSets.sumOf { it.weight * it.reps }
+
+        val prev = series.lastOrNull()
+        val e1Pct = if (prev != null && curE1 > 0) (curE1 - prev.first) / prev.first * 100 else null
+        val volPct = if (prev != null && prev.second > 0 && curVol > 0) (curVol - prev.second) / prev.second * 100 else null
+
+        // linear trend on the previous estimated 1RMs
+        var expPct: Double? = null
+        var expE1: Double? = null
+        if (series.size >= 2) {
+            val ys = series.map { it.first }
+            val n = ys.size
+            val xMean = (n - 1) / 2.0
+            val yMean = ys.average()
+            var num = 0.0
+            var den = 0.0
+            ys.forEachIndexed { i, y -> num += (i - xMean) * (y - yMean); den += (i - xMean) * (i - xMean) }
+            val slope = if (den > 0) num / den else 0.0
+            val fitLast = yMean + slope * (n - 1 - xMean)
+            expE1 = fitLast + slope
+            expPct = if (fitLast > 0) slope / fitLast * 100 else null
+        } else if (series.size == 1) {
+            // a single previous session: default expectation of a small progression
+            expPct = 1.0
+            expE1 = series.first().first * 1.01
+        }
+
+        val repsToBeat = prev?.let { (best, _) ->
+            val w = curSets.maxOfOrNull { it.weight }
+                ?: current?.sets?.firstOrNull { it.type != SetType.WARMUP }?.weight ?: 0.0
+            if (w <= 0) null else {
+                val r = (1..30).firstOrNull { Calc.e1rm(w, it) > best + 0.01 }
+                r?.let { w to it }
+            }
+        }
+        return Improvement(curE1, prev?.first, e1Pct, curVol, prev?.second, volPct, expPct, expE1, series.size, repsToBeat)
+    }
+
+    fun pct(v: Double?): String = v?.let { (if (it >= 0) "+" else "") + String.format("%.1f", it) + "%" } ?: "—"
+}
