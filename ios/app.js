@@ -754,7 +754,7 @@ const TIERS = [
   { name: 'KORE Concierge', price: 'da 690', per: '€ / mese', tag: 'Il coach al tuo fianco, ovunque', items: ['Tutto di KORE Signature', 'Coaching settimanale, anche in presenza', 'Sessioni in hotel, in viaggio o a domicilio', 'Linea diretta e riservata con il coach'] }
 ];
 const EMAIL = 'secretluxurymail@gmail.com', PHONE = '+393522054063';
-const mailTo = tier => `mailto:${EMAIL}?subject=${encodeURIComponent('Richiesta Secret Luxury Wellbeing' + (tier ? ' - ' + tier : ''))}`;
+const mailTo = tier => `mailto:${EMAIL}?subject=${encodeURIComponent('Richiesta Secret Luxury Wellness' + (tier ? ' - ' + tier : ''))}`;
 VIEWS.membership = () => topBar('Membership') + `<div class="pad">
   <div class="manifesto"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><h2 class="headline">Il tuo allenamento resta tuo.</h2>
   <p class="soft mt8">Nessun profilo, nessun tracciamento, nessuno sponsor. I tuoi dati non lasciano mai il telefono: non li raccogliamo, non li conserviamo, non li vendiamo. Paghi l'app, non con la tua privacy.</p>
@@ -764,8 +764,8 @@ VIEWS.membership = () => topBar('Membership') + `<div class="pad">
     <div class="tier-price"><b>${esc(t.price)}</b><span>${esc(t.per)}</span></div>
     ${t.items.map(bullet).join('')}
     <a class="${t.featured ? 'grad-btn' : 'out-btn tier-btn'} mt14" href="${mailTo(t.name)}">Richiedi l'accesso</a></div>`).join('')}
-  <div class="contact mt16"><p class="tier-name">Secret Luxury Wellbeing</p><p class="muted t13 mt6">Scrivici o chiamaci: rispondiamo personalmente, nella massima riservatezza.</p>
-    <a class="grad-btn mt14" href="${mailTo()}">Secret Luxury Wellbeing</a>
+  <div class="contact mt16"><p class="tier-name">Secret Luxury Wellness</p><p class="muted t13 mt6">Scrivici o chiamaci: rispondiamo personalmente, nella massima riservatezza.</p>
+    <a class="grad-btn mt14" href="${mailTo()}">Secret Luxury Wellness</a>
     <div class="grid2 mt10"><a class="out-btn" href="tel:${PHONE}">Chiama</a><a class="out-btn" href="https://wa.me/${PHONE.slice(1)}" target="_blank" rel="noopener">WhatsApp</a></div>
     <p class="muted t12 mt10">secretluxurymail@gmail.com · +39 352 205 4063</p></div>
   <p class="muted t12 mt16">Prezzi indicativi IVA inclusa. Ogni membership è riservata e su richiesta.</p><div class="sp32"></div></div>`;
