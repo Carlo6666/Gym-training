@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="../icons/icon-192.png">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
 <style>
-  :root { --bg:#0A0A0A; --card:#141414; --line:#2A2A2A; --text:#F5F1E8; --muted:#9A9387; --gold:#D4AF63;
+  :root { --bg:#0A0A0A; --card:#141414; --line:#2A2A2A; --text:#F5F1E8; --muted:#9A9387; --gold:#D4AF63; --orange:#E8823A;
     --grad:linear-gradient(135deg,#A8803A,#E9CF8A 55%,#B8904A); --serif:"Bodoni 72",Didot,"Playfair Display",Georgia,serif; }
   * { box-sizing:border-box; margin:0; }
   body { background:var(--bg); color:var(--text); font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; min-height:100vh;
@@ -54,10 +54,60 @@
   .row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   button.btn { border:0; cursor:pointer; width:100%; font:inherit; font-weight:800; }
   .note { color:var(--muted); font-size:12px; text-align:center; }
+  /* ---------- intro di apertura */
+  html.intro-lock, html.intro-lock body { overflow:hidden; }
+  .intro { position:fixed; inset:0; z-index:50; background:#000; overflow:hidden; transition:opacity .7s ease, visibility .7s; --halo:0; }
+  .intro.intro-out { opacity:0; visibility:hidden; }
+  .intro-img { position:absolute; border-radius:50%; overflow:hidden; opacity:0; will-change:transform,opacity;
+    box-shadow:0 0 0 1px rgba(212,175,99,.55), 0 0 28px rgba(212,175,99,.18); background:#111; }
+  .intro-img img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.85) contrast(1.05); }
+  .intro-threads, .intro-particles { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .intro-logo { position:absolute; left:50%; top:50%; width:min(46vw,250px); opacity:0; transform:translate(-50%,-50%);
+    filter:drop-shadow(0 0 calc(var(--halo) * 24px) rgba(212,175,99,.55)); will-change:transform,opacity; }
+  .intro-lora { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; background:#000; }
+  .intro-shade { position:absolute; inset:auto 0 0 0; height:42%; background:linear-gradient(transparent,rgba(0,0,0,.85)); pointer-events:none; }
+  .intro-line { position:absolute; left:0; right:0; bottom:calc(84px + env(safe-area-inset-bottom)); padding:0 24px; text-align:center; opacity:0;
+    font-family:var(--serif); font-size:clamp(24px,6.4vw,40px); line-height:1.15; color:var(--text); text-shadow:0 2px 18px #000; }
+  .intro-line small { display:block; margin-top:8px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; font-size:11px;
+    letter-spacing:4px; color:var(--gold); }
+  .intro-ui { position:absolute; left:0; right:0; bottom:calc(20px + env(safe-area-inset-bottom)); display:flex; gap:10px; justify-content:center; padding:0 16px; }
+  .intro-ui button { min-height:44px; padding:0 18px; border-radius:999px; font:inherit; font-size:13px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; cursor:pointer; }
+  .intro-skip { background:rgba(0,0,0,.45); color:var(--text); border:1px solid rgba(245,241,232,.35); }
+  .intro-listen { background:var(--grad); color:#000; border:0; }
+  @media (prefers-reduced-motion: reduce) { .intro { transition:none; } }
+  /* ---------- filigrana e accenti */
+  body::before { content:""; position:fixed; left:50%; top:52%; width:min(120vw,760px); aspect-ratio:1; transform:translate(-50%,-50%);
+    background:url(intro/logo-wellness.png) center/contain no-repeat; opacity:.045; pointer-events:none; z-index:-1; }
+  .accent { color:var(--orange); }
+  .tier .tag { display:inline-block; margin-top:8px; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:1.5px;
+    color:#000; background:var(--orange); }
+  .call { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
 </style>
 </head>
 <body>
-<main>
+<div class="intro" id="intro" role="dialog" aria-label="Introduzione Secret Luxury Wellness">
+  <div class="intro-img"><img src="intro/1-palestra.jpg" alt="" decoding="async"></div>
+  <div class="intro-img"><img src="intro/2-corsa.jpg" alt="" decoding="async"></div>
+  <div class="intro-img"><img src="intro/3-cibo.jpg" alt="" decoding="async"></div>
+  <div class="intro-img"><img src="intro/4-amici.jpg" alt="" decoding="async"></div>
+  <div class="intro-img"><img src="intro/5-mare.jpg" alt="" decoding="async"></div>
+  <div class="intro-img"><img src="intro/6-quiete.jpg" alt="" decoding="async"></div>
+  <video class="intro-lora" playsinline preload="auto" poster="" aria-label="Lora presenta KORE">
+    <source src="intro/lora-presentazione.mp4" type="video/mp4">
+  </video>
+  <div class="intro-shade"></div>
+  <svg class="intro-threads" aria-hidden="true"></svg>
+  <img class="intro-logo" src="intro/logo-wellness.png" alt="Secret Luxury Wellness">
+  <canvas class="intro-particles" aria-hidden="true"></canvas>
+  <p class="intro-line">Il tuo allenamento resta tuo.<small>LORA · SECRET LUXURY WELLNESS</small></p>
+  <div class="intro-ui">
+    <button type="button" class="intro-listen" hidden>&#9654; Ascolta Lora</button>
+    <button type="button" class="intro-skip">Salta introduzione</button>
+  </div>
+</div>
+<script>document.documentElement.classList.add('intro-lock');</script>
+<main id="top" tabindex="-1">
   <img class="logo" src="../brand/logo1.png" alt="Secret Luxury Wellness">
   <div class="kore">KORE</div>
   <h1>Il tuo allenamento resta tuo.</h1>
@@ -102,7 +152,7 @@
   <section class="sec">
     <h2>Membership</h2>
     <div class="tier"><h3>KORE Private</h3><div class="p">39 <small>€ / mese</small></div><p>L'app completa, senza account e senza raccolta di dati. Programma annuale firmato dal coach.</p></div>
-    <div class="tier feat2"><h3>KORE Signature</h3><div class="p">190 <small>€ / mese</small></div><p>Un programma costruito su di te, un check mensile riservato e la revisione costante dei progressi.</p></div>
+    <div class="tier feat2"><h3>KORE Signature</h3><span class="tag">La più richiesta</span><div class="p">190 <small>€ / mese</small></div><p>Un programma costruito su di te, un check mensile riservato e la revisione costante dei progressi.</p></div>
     <div class="tier"><h3>KORE Concierge</h3><div class="p">da 690 <small>€ / mese</small></div><p>Coaching settimanale anche in presenza, in hotel, in viaggio o a domicilio. Linea diretta con il coach.</p></div>
   </section>
 
@@ -124,6 +174,7 @@
   <p class="contact">Membership su richiesta:<br>
     <a href="mailto:info@secretluxuryconcierge.com?subject=Richiesta%20Secret%20Luxury%20Wellness">info@secretluxuryconcierge.com</a> ·
     <a href="https://wa.me/393522054063">WhatsApp +39 352 205 4063</a></p>
+  <div class="call"><a class="btn secondary" href="tel:+393522054063">Chiama</a><a class="btn secondary" href="https://wa.me/393522054063">WhatsApp</a></div>
 </main>
 <script>
   // Mostra per primo il pulsante giusto per il telefono di chi visita
@@ -144,5 +195,6 @@
       : 'mailto:info@secretluxuryconcierge.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   });
 </script>
+<script src="intro.js"></script>
 </body>
 </html>
