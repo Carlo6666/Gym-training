@@ -753,7 +753,7 @@ const TIERS = [
   { name: 'KORE Signature', price: '190', per: '€ / mese', tag: 'Il programma costruito su di te', featured: true, items: ['Tutto di KORE Private', 'Programma personalizzato sui tuoi obiettivi', 'Check mensile riservato con il coach', 'Revisione dei carichi e dei progressi'] },
   { name: 'KORE Concierge', price: 'da 690', per: '€ / mese', tag: 'Il coach al tuo fianco, ovunque', items: ['Tutto di KORE Signature', 'Coaching settimanale, anche in presenza', 'Sessioni in hotel, in viaggio o a domicilio', 'Linea diretta e riservata con il coach'] }
 ];
-const EMAIL = 'secretluxurymail@gmail.com', PHONE = '+393522054063';
+const EMAIL = 'info@secretluxuryconcierge.com', PHONE = '+393522054063';
 const mailTo = tier => `mailto:${EMAIL}?subject=${encodeURIComponent('Richiesta Secret Luxury Wellness' + (tier ? ' - ' + tier : ''))}`;
 VIEWS.membership = () => topBar('Membership') + `<div class="pad">
   <div class="manifesto"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><h2 class="headline">Il tuo allenamento resta tuo.</h2>
@@ -767,7 +767,7 @@ VIEWS.membership = () => topBar('Membership') + `<div class="pad">
   <div class="contact mt16"><p class="tier-name">Secret Luxury Wellness</p><p class="muted t13 mt6">Scrivici o chiamaci: rispondiamo personalmente, nella massima riservatezza.</p>
     <a class="grad-btn mt14" href="${mailTo()}">Secret Luxury Wellness</a>
     <div class="grid2 mt10"><a class="out-btn" href="tel:${PHONE}">Chiama</a><a class="out-btn" href="https://wa.me/${PHONE.slice(1)}" target="_blank" rel="noopener">WhatsApp</a></div>
-    <p class="muted t12 mt10">secretluxurymail@gmail.com · +39 352 205 4063</p></div>
+    <p class="muted t12 mt10">info@secretluxuryconcierge.com · +39 352 205 4063</p></div>
   <p class="muted t12 mt16">Prezzi indicativi IVA inclusa. Ogni membership è riservata e su richiesta.</p><div class="sp32"></div></div>`;
 
 // =============================================================================== MODALS
