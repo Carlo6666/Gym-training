@@ -22,9 +22,7 @@ jobs:
           cd ios/wellness/intro
           grep -v '^#' sources.txt | while IFS='|' read -r file url page author; do
             [ -z "$file" ] && continue
-            curl -fsSL "${url}?w=900&h=900&fit=crop&q=85&fm=jpg" -o "tmp-$file"
-            convert "tmp-$file" -resize 720x720^ -gravity center -extent 720x720 -strip -quality 80 -interlace Plane "$file"
-            rm "tmp-$file"
+            curl -fsSL "${url}?w=720&h=720&fit=crop&crop=faces,entropy&q=78&fm=jpg" -o "$file"
             ls -la "$file"
           done
       - name: Salva nel branch
