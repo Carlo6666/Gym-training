@@ -1,9 +1,10 @@
 /* KORE Training · stesso tema dell'app Android: nero + arancione */
 :root {
   --bg: #0A0A0A; --surface: #151515; --surface2: #1E1E1E; --line: #2A2A2A;
-  --accent: #FF6A00; --accent2: #FFA142; --text: #F5F5F5; --muted: #9A9A9A;
+  --accent: #D4AF63; --accent2: #E8823A; --text: #F5F5F5; --muted: #9A9A9A;
   --good: #3DDC84; --warn: #FFC23D; --bad: #FF4D4D; --blue: #4DA3FF;
-  --grad: linear-gradient(135deg, #FF4D00, #FF8A1F);
+  --grad: linear-gradient(135deg, #A8803A, #E9CF8A 55%, #B8904A);
+  --serif: "Bodoni 72", Didot, "Didot LT STD", "Playfair Display", Georgia, serif;
   --safe-t: env(safe-area-inset-top, 0px); --safe-b: env(safe-area-inset-bottom, 0px);
   --tabs-h: 64px;
   color-scheme: dark;
@@ -59,7 +60,7 @@ small { font-size: 11px; display: block; }
 .lbl { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: var(--muted); }
 
 /* hero */
-.hero { background: linear-gradient(180deg, #2A1406, var(--bg)); padding: 20px; }
+.hero { background: linear-gradient(180deg, #1C160B, var(--bg)); padding: 20px; }
 .big-hero { padding: 28px 24px 24px; }
 .logo { font-weight: 900; font-size: 22px; color: var(--accent); letter-spacing: 4px; }
 .logo.xl { font-size: 40px; letter-spacing: 8px; display: block; }
@@ -72,7 +73,7 @@ small { font-size: 11px; display: block; }
 .section { display: flex; align-items: center; padding: 20px 0 10px; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: var(--muted); text-transform: uppercase; }
 .section > span { flex: 1; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: block; width: 100%; }
-.card.hl { border-color: rgba(255, 106, 0, .6); }
+.card.hl { border-color: rgba(212, 175, 99, .6); }
 .card.tap { cursor: pointer; }
 .card.tap:active { background: #1a1a1a; }
 .pill { display: inline-block; white-space: nowrap; border-radius: 999px; padding: 4px 10px; font-size: 11px; font-weight: 700; line-height: 1.2;
@@ -85,7 +86,7 @@ small { font-size: 11px; display: block; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px; min-width: 0; }
 .stat b { display: block; font-size: 19px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat span { display: block; font-size: 12px; color: var(--muted); line-height: 1.25; }
-.stat.accent { background: rgba(255, 106, 0, .12); border-color: rgba(255, 106, 0, .4); }
+.stat.accent { background: rgba(212, 175, 99, .12); border-color: rgba(212, 175, 99, .4); }
 .stat.accent b { color: var(--accent); }
 .shortcuts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .shortcuts button { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 0; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--accent); }
@@ -98,7 +99,7 @@ small { font-size: 11px; display: block; }
 .kv span { flex: 1; color: var(--muted); }
 .bullet { display: flex; padding: 3px 0; gap: 10px; font-size: 14px; color: rgba(245, 245, 245, .9); }
 .bullet i { flex: none; width: 6px; height: 6px; border-radius: 3px; background: var(--accent); margin-top: 7px; }
-.install { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; padding: 12px; border-radius: 16px; background: rgba(77, 163, 255, .1); border: 1px solid rgba(77, 163, 255, .35); color: var(--blue); }
+.install { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; padding: 12px; border-radius: 16px; background: rgba(232, 130, 58, .08); border: 1px solid rgba(232, 130, 58, .35); color: var(--accent2); }
 .install b { color: var(--text); }
 .install span { display: block; color: rgba(245, 245, 245, .85); font-size: 13px; margin-top: 2px; }
 .install .icon-btn { margin: -6px -6px 0 0; color: var(--muted); }
@@ -157,7 +158,7 @@ textarea:focus { border-color: var(--accent); }
 .chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
 .chip { white-space: nowrap; padding: 7px 14px; border-radius: 10px; border: 1px solid var(--line); font-size: 13px; font-weight: 600; }
-.chip.on { background: rgba(255, 106, 0, .18); border-color: var(--accent); color: var(--accent); }
+.chip.on { background: rgba(212, 175, 99, .18); border-color: var(--accent); color: var(--accent); }
 .lib-row, .rec-row { display: flex; align-items: center; width: 100%; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .rec-row { border: 0; padding: 6px 0; }
 .lib-row b, .rec-row b { display: block; }
@@ -184,7 +185,7 @@ textarea:focus { border-color: var(--accent); }
 .track > div { height: 100%; border-radius: 4px; }
 .vbar small { color: var(--muted); }
 .macro { padding: 6px 0; }
-.tool-ic { width: 44px; height: 44px; border-radius: 14px; background: rgba(255, 106, 0, .14); color: var(--accent); display: grid; place-items: center; flex: none; }
+.tool-ic { width: 44px; height: 44px; border-radius: 14px; background: rgba(212, 175, 99, .14); color: var(--accent); display: grid; place-items: center; flex: none; }
 
 /* charts */
 .chart { width: 100%; height: auto; display: block; }
@@ -214,7 +215,7 @@ textarea:focus { border-color: var(--accent); }
 /* workout */
 .wk .card { margin-top: 14px; }
 .wk .card:first-child { margin-top: 16px; }
-.tech { border-radius: 12px; background: rgba(255, 106, 0, .1); padding: 10px; }
+.tech { border-radius: 12px; background: rgba(212, 175, 99, .1); padding: 10px; }
 .tech b { display: block; color: var(--accent); font-size: 13px; }
 .tech span { font-size: 12px; color: rgba(245, 245, 245, .85); }
 .set-head { display: grid; grid-template-columns: 44px 1fr 1fr .7fr 42px; gap: 6px; padding: 10px 4px 2px; font-size: 10px; font-weight: 700; color: var(--muted); text-align: center; }
@@ -222,7 +223,7 @@ textarea:focus { border-color: var(--accent); }
 .set { display: grid; grid-template-columns: 44px 1fr 1fr .7fr 42px; gap: 6px; align-items: center; padding: 4px; margin: 3px 0; border-radius: 12px; }
 .set.warm { background: rgba(30, 30, 30, .5); }
 .set.done { background: rgba(61, 220, 132, .12); }
-.set-lbl { height: 36px; border-radius: 10px; background: rgba(255, 106, 0, .15); color: var(--accent); font-weight: 900; text-align: center; }
+.set-lbl { height: 36px; border-radius: 10px; background: rgba(212, 175, 99, .15); color: var(--accent); font-weight: 900; text-align: center; }
 .set.warm .set-lbl { background: var(--surface2); color: var(--muted); }
 .cell { width: 100%; min-width: 0; height: 40px; border-radius: 10px; background: var(--surface2); border: 1px solid transparent; outline: 0; text-align: center; font-size: 17px; font-weight: 700; }
 .cell:focus { border-color: var(--accent); }
@@ -232,7 +233,7 @@ textarea:focus { border-color: var(--accent); }
 .imp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
 .imp > div { border-radius: 14px; padding: 10px; min-width: 0; }
 .imp-l { background: var(--surface2); }
-.imp-r { background: rgba(255, 106, 0, .10); }
+.imp-r { background: rgba(212, 175, 99, .10); }
 .imp .lbl { font-size: 9px; }
 .imp .big { display: block; font-size: 22px; font-weight: 900; line-height: 1.25; }
 .imp small { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
@@ -261,7 +262,7 @@ textarea:focus { border-color: var(--accent); }
 .menu-item { display: block; width: 100%; padding: 14px 2px; font-size: 16px; border-bottom: 1px solid var(--line); }
 .emojis { display: flex; gap: 6px; margin-top: 6px; }
 .emojis button { width: 44px; height: 44px; border-radius: 50%; background: var(--surface2); font-size: 21px; text-align: center; }
-.emojis button.on { background: rgba(255, 106, 0, .3); }
+.emojis button.on { background: rgba(212, 175, 99, .3); }
 .check-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; }
 .checkbox { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--muted); display: grid; place-items: center; color: #000; }
 .checkbox.on { background: var(--accent); border-color: var(--accent); }
@@ -276,3 +277,36 @@ html, body { overflow-x: hidden; }
 .grid2 > *, .grid3 > *, .grid4 > * { min-width: 0; }
 .field { min-width: 0; }
 .field-in input { width: 100%; }
+
+/* Secret Luxury: titoli serif e dettagli oro */
+.logo, .page-title, .headline, .h-sm, .display, .topbar h1, .dialog h2 { font-family: var(--serif); letter-spacing: .5px; }
+.logo { font-weight: 700; letter-spacing: 6px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.page-title, .headline { font-weight: 700; }
+.section { color: var(--accent); opacity: .85; letter-spacing: 2.4px; }
+.card { border-color: #262217; }
+.grad-btn { letter-spacing: 2.5px; font-weight: 800; }
+.big-hero::after { content: "SECRET LUXURY WELLNESS"; display: block; margin-top: 16px; font-size: 10px; letter-spacing: 3px; color: var(--accent2); }
+
+/* membership */
+.manifesto { margin-top: 8px; padding: 22px 18px; border-radius: 22px; border: 1px solid rgba(212, 175, 99, .35); background: radial-gradient(120% 90% at 0% 0%, #1F190D, var(--surface)); }
+.manifesto .ic { width: 28px; height: 28px; }
+.manifesto .headline { margin-top: 10px; }
+.sl-tag { font-size: 10px; letter-spacing: 3px; color: var(--accent2); display: block; }
+.tier { position: relative; margin-top: 16px; padding: 20px 18px; border-radius: 22px; background: var(--surface); border: 1px solid #262217; }
+.tier.featured { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(212, 175, 99, .25), 0 12px 40px rgba(212, 175, 99, .08); }
+.tier-badge { position: absolute; top: -10px; right: 16px; padding: 4px 10px; border-radius: 999px; background: var(--grad); color: #000; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+.tier-name { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--accent); }
+.tier-price { display: flex; align-items: baseline; gap: 6px; margin: 12px 0 8px; }
+.tier-price b { font-family: var(--serif); font-size: 36px; }
+.tier-price span { color: var(--muted); font-size: 13px; }
+.tier-btn { width: 100%; color: var(--accent); border-color: rgba(212, 175, 99, .5); }
+
+/* logo Secret Luxury Wellness */
+.brand-logo { display: block; width: 168px; height: auto; margin: 4px auto 18px; }
+.big-hero .brand-logo { margin: 0 0 16px; width: 150px; }
+.sym-sm { width: 34px; height: 34px; margin-right: 10px; object-fit: contain; }
+.manifesto { text-align: center; }
+
+a.grad-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; }
+a.tier-btn, .contact .out-btn { width: 100%; text-decoration: none; }
+.contact { text-align: center; padding: 18px; border: 1px solid rgba(212,175,99,.35); border-radius: 18px; }

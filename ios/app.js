@@ -97,6 +97,8 @@ const ICONS = {
   tune: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
   search: '<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>',
   speed: '<path d="M12 14l4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/>',
+  crown: '<path d="M3 18h18M4 15l-1-9 5 4 4-6 4 6 5-4-1 9z"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
   share: '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><path d="M12 2v13"/>'
 };
 const icon = (n, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
@@ -229,7 +231,7 @@ VIEWS.home = () => {
   const last = [...data.history].sort((a, b) => b.startedAt - a.startedAt)[0];
   const standalone = window.navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
 
-  let h = `<div class="hero"><div class="row"><span class="logo">KORE</span><span class="grow"></span>${pill(`${phase.short} · SETT. ${st.week}/${Program.WEEKS_PER_MESO}`)}</div>
+  let h = `<div class="hero"><div class="row"><img class="sym-sm" src="brand/symbol1.png" alt=""><span class="logo">KORE</span><span class="grow"></span>${pill(`${phase.short} · SETT. ${st.week}/${Program.WEEKS_PER_MESO}`)}</div>
     <p class="muted mt18">${data.profile.name.trim() ? `Ciao ${esc(data.profile.name.trim())},` : 'Pronto ad allenarti?'}</p>
     <h2 class="headline">${plan.deload ? 'Settimana di scarico' : esc(phase.name)}</h2>
     <p class="muted small mt6">Mesociclo ${st.meso + 1}/${Program.MESO_PER_PHASE} · Microciclo ${abs} di ${Program.totalWeeks}</p>
@@ -315,13 +317,14 @@ function readForm() {
   };
 }
 
-VIEWS.onboarding = () => `<div class="hero big-hero"><span class="logo xl">KORE</span><p class="muted">Allenati con metodo. Misura. Progredisci.</p>
+VIEWS.onboarding = () => `<div class="hero big-hero"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><span class="logo xl">KORE</span><p class="muted">Allenati con metodo. Misura. Progredisci.</p>
   <p class="mt14">Un programma annuale in 3 fasi che adatta carichi, serie e recuperi al tuo livello e ai tuoi massimali.</p>
   <button class="out-btn mt14" data-a="importBackup">Hai un backup dell'app Android? Importalo</button></div>` + profileForm('Crea il mio programma');
 
 VIEWS.profile = () => {
   let h = `<h1 class="page-title pad">Profilo</h1>` + profileForm('Salva modifiche');
-  h += `<div class="pad">` + section('Backup dei dati');
+  h += `<div class="pad">` + section('Membership') + card(`<div class="row"><div class="tool-ic">${icon('crown')}</div><div class="grow ml14"><b>KORE Private · Signature · Concierge</b><p class="muted t12">Scopri i livelli e la nostra promessa sulla privacy</p></div><span class="muted">${icon('right')}</span></div>`, { action: 'data-a="go" data-v="membership"' });
+  h += section('Backup dei dati');
   h += card(`<p class="muted t13">Tutti i dati restano sul telefono. Esporta un backup per non perderli cambiando dispositivo. Il file è compatibile con l'app Android: puoi spostare i dati da un telefono all'altro.</p>
     <div class="grid2 mt10">${outBtn('Esporta', 'data-a="exportBackup"')}${outBtn('Importa', 'data-a="importBackup"')}</div>`);
   h += section('Zona pericolosa') + outBtn('Ricomincia il programma dalla fase 1', 'data-a="confirmReset"', 'var(--bad)', 'style="width:100%;color:var(--bad)"');
@@ -638,7 +641,7 @@ VIEWS.session = arg => {
 
 // =============================================================================== TOOLS
 VIEWS.tools = () => {
-  const rows = [['calc', 'Calcolatore massimale', "Stima l'1RM da qualsiasi serie e tabella dei carichi", 'onerm'], ['speed', 'Tabella RIR / RPE', 'Che carico usare per ripetizioni e buffer desiderati', 'rir'],
+  const rows = [['crown', 'Membership', 'Private, Signature e Concierge: privacy assoluta', 'membership'], ['calc', 'Calcolatore massimale', "Stima l'1RM da qualsiasi serie e tabella dei carichi", 'onerm'], ['speed', 'Tabella RIR / RPE', 'Che carico usare per ripetizioni e buffer desiderati', 'rir'],
     ['dumbbell', 'Calcolatore dischi', 'Quali dischi caricare sul bilanciere', 'plates'], ['food', 'Calorie e macro', 'Fabbisogno, surplus e calorie cicliche', 'nutrition'],
     ['scale', 'Peso corporeo', 'Pesate giornaliere, medie settimanali e andamento', 'bodyweight'], ['search', 'Libreria esercizi', 'Tecnica esecutiva e alternative per ogni distretto', 'library'],
     ['book', 'Il metodo', 'Principi di allenamento, volume, intensità e progressioni', 'guide']];
@@ -743,6 +746,29 @@ VIEWS.exercise = id => {
 VIEWS.guide = () => topBar('Il metodo') + `<div class="pad"><p class="muted t13 mb10">Sintesi dei principi su cui si basa il programma dell'app: come vengono scelti esercizi, serie, ripetizioni, carichi e recuperi.</p>
   ${GUIDE.map((g, i) => card(`<div class="row"><b class="accent xb">${String(i + 1).padStart(2, '0')}</b><b class="grow ml12">${esc(g.title)}</b><span class="muted">${icon(ui.guideOpen === i ? 'up' : 'down')}</span></div>
     ${ui.guideOpen === i ? `<div class="mt8">${g.body.map(bullet).join('')}</div>` : ''}`, { highlight: ui.guideOpen === i, action: `data-a="guide" data-v="${i}"`, cls: 'mb8' })).join('')}<div class="sp24"></div></div>`;
+
+// =============================================================================== MEMBERSHIP
+const TIERS = [
+  { name: 'KORE Private', price: '39', per: '€ / mese', tag: 'L\'essenziale, senza compromessi', items: ['App completa, nessun account', 'Nessuna raccolta, conservazione o vendita di dati', 'Programma annuale firmato dal tuo coach', 'Timer, progressioni, grafici e strumenti'] },
+  { name: 'KORE Signature', price: '190', per: '€ / mese', tag: 'Il programma costruito su di te', featured: true, items: ['Tutto di KORE Private', 'Programma personalizzato sui tuoi obiettivi', 'Check mensile riservato con il coach', 'Revisione dei carichi e dei progressi'] },
+  { name: 'KORE Concierge', price: 'da 690', per: '€ / mese', tag: 'Il coach al tuo fianco, ovunque', items: ['Tutto di KORE Signature', 'Coaching settimanale, anche in presenza', 'Sessioni in hotel, in viaggio o a domicilio', 'Linea diretta e riservata con il coach'] }
+];
+const EMAIL = 'secretluxurymail@gmail.com', PHONE = '+393522054063';
+const mailTo = tier => `mailto:${EMAIL}?subject=${encodeURIComponent('Richiesta Secret Luxury Wellbeing' + (tier ? ' - ' + tier : ''))}`;
+VIEWS.membership = () => topBar('Membership') + `<div class="pad">
+  <div class="manifesto"><img class="brand-logo" src="brand/logo1.png" alt="Secret Luxury Wellness"><h2 class="headline">Il tuo allenamento resta tuo.</h2>
+  <p class="soft mt8">Nessun profilo, nessun tracciamento, nessuno sponsor. I tuoi dati non lasciano mai il telefono: non li raccogliamo, non li conserviamo, non li vendiamo. Paghi l'app, non con la tua privacy.</p>
+  <small class="sl-tag mt14">SECRET LUXURY WELLNESS</small></div>
+  ${TIERS.map(t => `<div class="tier${t.featured ? ' featured' : ''}">${t.featured ? '<span class="tier-badge">LA SCELTA PIÙ RICHIESTA</span>' : ''}
+    <h3 class="tier-name">${esc(t.name)}</h3><p class="muted t13">${esc(t.tag)}</p>
+    <div class="tier-price"><b>${esc(t.price)}</b><span>${esc(t.per)}</span></div>
+    ${t.items.map(bullet).join('')}
+    <a class="${t.featured ? 'grad-btn' : 'out-btn tier-btn'} mt14" href="${mailTo(t.name)}">Richiedi l'accesso</a></div>`).join('')}
+  <div class="contact mt16"><p class="tier-name">Secret Luxury Wellbeing</p><p class="muted t13 mt6">Scrivici o chiamaci: rispondiamo personalmente, nella massima riservatezza.</p>
+    <a class="grad-btn mt14" href="${mailTo()}">Secret Luxury Wellbeing</a>
+    <div class="grid2 mt10"><a class="out-btn" href="tel:${PHONE}">Chiama</a><a class="out-btn" href="https://wa.me/${PHONE.slice(1)}" target="_blank" rel="noopener">WhatsApp</a></div>
+    <p class="muted t12 mt10">secretluxurymail@gmail.com · +39 352 205 4063</p></div>
+  <p class="muted t12 mt16">Prezzi indicativi IVA inclusa. Ogni membership è riservata e su richiesta.</p><div class="sp32"></div></div>`;
 
 // =============================================================================== MODALS
 function openModal(m) { ui.modal = m; renderOverlay(); }
