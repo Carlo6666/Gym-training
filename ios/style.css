@@ -286,3 +286,17 @@ html, body { overflow-x: hidden; }
 .card { border-color: #262217; }
 .grad-btn { letter-spacing: 2.5px; font-weight: 800; }
 .big-hero::after { content: "SECRET LUXURY · WELL-BEING"; display: block; margin-top: 16px; font-size: 10px; letter-spacing: 3px; color: var(--accent2); }
+
+/* membership */
+.manifesto { margin-top: 8px; padding: 22px 18px; border-radius: 22px; border: 1px solid rgba(212, 175, 99, .35); background: radial-gradient(120% 90% at 0% 0%, #1F190D, var(--surface)); }
+.manifesto .ic { width: 28px; height: 28px; }
+.manifesto .headline { margin-top: 10px; }
+.sl-tag { font-size: 10px; letter-spacing: 3px; color: var(--accent2); display: block; }
+.tier { position: relative; margin-top: 16px; padding: 20px 18px; border-radius: 22px; background: var(--surface); border: 1px solid #262217; }
+.tier.featured { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(212, 175, 99, .25), 0 12px 40px rgba(212, 175, 99, .08); }
+.tier-badge { position: absolute; top: -10px; right: 16px; padding: 4px 10px; border-radius: 999px; background: var(--grad); color: #000; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+.tier-name { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--accent); }
+.tier-price { display: flex; align-items: baseline; gap: 6px; margin: 12px 0 8px; }
+.tier-price b { font-family: var(--serif); font-size: 36px; }
+.tier-price span { color: var(--muted); font-size: 13px; }
+.tier-btn { width: 100%; color: var(--accent); border-color: rgba(212, 175, 99, .5); }
